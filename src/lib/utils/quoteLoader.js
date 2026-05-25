@@ -44,15 +44,42 @@ async function fetchQuoteFile(time) {
 /**
  * Strips HTML tags from a string and normalises whitespace.
  * Handles <br/>, <br />, <br>, <p> etc. from raw dataset entries.
+ * Also converts Unicode mathematical alphanumeric symbols to regular ASCII.
  * @param {string} str
  * @returns {string}
  */
 function sanitizeText(str) {
 	if (!str) return '';
-	return str
+
+	let result = str
 		.replace(/<br\s*\/?>/gi, ' ')  // <br/> → space
-		.replace(/<[^>]+>/g, '')        // strip any remaining tags
-		.replace(/\s+/g, ' ');          // collapse multiple spaces
+		.replace(/<[^>]+>/g, '');      // strip any remaining tags
+
+	// Convert mathematical alphanumeric symbols (U+1D400–U+1D7FF range)
+	// These include bold, italic, bold-italic, and other variants of Latin letters
+	result = Array.from(result)
+		.map(char => {
+			const codePoint = char.codePointAt(0);
+			// Mathematical Alphanumeric Symbols block spans 0x1D400–0x1D7FF
+			if (codePoint >= 0x1D400 && codePoint <= 0x1D7FF) {
+				// Each mathematical alphabet has 52 letters (26 uppercase + 26 lowercase)
+				// Calculate which alphabet and position within that alphabet
+				const offset = codePoint - 0x1D400;
+				const position = offset % 52;
+
+				if (position < 26) {
+					// Uppercase A-Z
+					return String.fromCharCode(65 + position);
+				} else {
+					// Lowercase a-z
+					return String.fromCharCode(97 + (position - 26));
+				}
+			}
+			return char;
+		})
+		.join('');
+
+	return result.replace(/\s+/g, ' ');  // collapse multiple spaces
 }
 
 /**
