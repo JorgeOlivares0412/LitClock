@@ -42,6 +42,35 @@ async function fetchQuoteFile(time) {
 }
 
 /**
+ * Strips HTML tags from a string and normalises whitespace.
+ * Handles <br/>, <br />, <br>, <p> etc. from raw dataset entries.
+ * @param {string} str
+ * @returns {string}
+ */
+function sanitizeText(str) {
+	if (!str) return '';
+	return str
+		.replace(/<br\s*\/?>/gi, ' ')  // <br/> → space
+		.replace(/<[^>]+>/g, '')        // strip any remaining tags
+		.replace(/\s+/g, ' ')           // collapse multiple spaces
+		.trim();
+}
+
+/**
+ * Sanitizes the text fields of a raw quote entry.
+ * @param {object} quote
+ * @returns {object}
+ */
+function sanitizeQuote(quote) {
+	return {
+		...quote,
+		quote_first:     sanitizeText(quote.quote_first),
+		quote_time_case: sanitizeText(quote.quote_time_case),
+		quote_last:      sanitizeText(quote.quote_last),
+	};
+}
+
+/**
  * Loads a quote for the given time and settings.
  * Returns a quote object or null if none found.
  *
@@ -62,6 +91,7 @@ export async function loadQuote(time, settings) {
 
 	if (pool.length === 0) return null;
 
-	// Pick a random quote from the pool
-	return pool[Math.floor(Math.random() * pool.length)];
+	// Pick a random quote and sanitize before returning
+	const raw = pool[Math.floor(Math.random() * pool.length)];
+	return sanitizeQuote(raw);
 }
