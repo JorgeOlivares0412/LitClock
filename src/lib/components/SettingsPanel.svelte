@@ -214,6 +214,23 @@
 			</div>
 		</div>
 
+		<!-- Invert -->
+		<div class="row">
+			<span class="label">Invert</span>
+			<div class="options">
+				<button
+					class="opt"
+					class:selected={$settings.invert === true}
+					onclick={() => settings.update({ invert: true })}
+				>Yes</button>
+				<button
+					class="opt"
+					class:selected={$settings.invert === false}
+					onclick={() => settings.update({ invert: false })}
+				>No</button>
+			</div>
+		</div>
+
 		<!-- Theme -->
 		<div class="row">
 			<span class="label">Theme</span>
@@ -245,12 +262,14 @@
 		overflow-y: auto;
 	}
 
+	/* Settings heading matches the date header style */
 	.heading {
-		font-family: var(--font-serif);
+		font-family: var(--font-header);
 		font-size: var(--date-size);
 		color: var(--text-muted);
-		letter-spacing: 0.03em;
-		font-weight: 400;
+		letter-spacing: 0.06em;
+		font-weight: 700;
+		text-transform: uppercase;
 		text-align: center;
 		padding: 0.5rem 0 2rem;
 	}
@@ -271,10 +290,10 @@
 	}
 
 	.label {
-		font-family: var(--font-serif);
+		font-family: var(--font-body);
 		font-size: 1.05rem;
 		color: var(--text-primary);
-		font-weight: 400;
+		font-weight: var(--font-weight-body);
 		white-space: nowrap;
 		flex-shrink: 0;
 	}
@@ -287,11 +306,11 @@
 		justify-content: flex-end;
 	}
 
-	/* Option buttons — look like plain text, bold when selected */
+	/* Option buttons — plain text weight at rest, bold when selected */
 	.opt {
-		font-family: var(--font-serif);
+		font-family: var(--font-body);
 		font-size: 1.05rem;
-		font-weight: 400;
+		font-weight: var(--font-weight-body);
 		color: var(--text-primary);
 		background: none;
 		border: none;
@@ -301,7 +320,7 @@
 		transition: opacity 0.1s;
 	}
 	.opt:hover { opacity: 0.6; }
-	.opt.selected { font-weight: 600; }
+	.opt.selected { font-weight: 700; }
 
 	/* Manual field group — muted when inactive, full color when active */
 	.field-group {
@@ -317,7 +336,7 @@
 
 	/* Number inputs that look like text */
 	.field {
-		font-family: var(--font-serif);
+		font-family: var(--font-body);
 		font-size: 1.05rem;
 		color: var(--text-primary);
 		background: transparent;
@@ -339,9 +358,9 @@
 
 	/* Done button */
 	.done {
-		font-family: var(--font-serif);
+		font-family: var(--font-body);
 		font-size: 1.1rem;
-		font-weight: 600;
+		font-weight: 700;
 		color: var(--text-primary);
 		background: none;
 		border: none;

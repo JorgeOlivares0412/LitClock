@@ -55,11 +55,12 @@
 
 	.date,
 	.clock {
-		font-family: var(--font-serif);
+		font-family: var(--font-header);
 		font-size: var(--date-size);
 		color: var(--text-muted);
-		letter-spacing: 0.04em;
+		letter-spacing: 0.06em;
 		line-height: 1.8;
-		font-weight: 400;
+		font-weight: 700;
+		text-transform: uppercase;
 	}
 </style>

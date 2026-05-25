@@ -42,10 +42,10 @@
 	}
 
 	.quote-text {
-		font-family: var(--font-serif);
+		font-family: var(--font-body);
 		line-height: var(--quote-leading);
 		color: var(--text-primary);
-		font-weight: 400;
+		font-weight: var(--font-weight-body);
 		font-style: normal;
 		text-align: left;
 		width: 100%;
@@ -64,7 +64,7 @@
 
 	/* Bolded time text — weight only, no size shift */
 	.quote-text :global(strong) {
-		font-weight: 600;
+		font-weight: 700;
 		font-style: normal;
 	}
 

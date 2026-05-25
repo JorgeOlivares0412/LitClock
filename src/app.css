@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&display=swap');
+@import './lib/themes/fonts.css';
 @import './lib/themes/paper.css';
 
 *, *::before, *::after {
@@ -21,7 +21,8 @@ html, body {
 body {
 	background-color: var(--bg);
 	color: var(--text-primary);
-	font-family: var(--font-serif);
+	font-family: var(--font-body);
+	font-weight: var(--font-weight-body);
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	/* Prevent rubber-band scroll revealing white behind the themed bg */

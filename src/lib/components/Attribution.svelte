@@ -18,11 +18,11 @@
 
 	.title,
 	.author {
-		font-family: var(--font-serif);
+		font-family: var(--font-body);
 		font-size: var(--attr-size);
 		color: var(--text-primary);
 		line-height: 1.7;
-		font-weight: 400;
+		font-weight: var(--font-weight-body);
 	}
 
 	@media (min-width: 600px) {

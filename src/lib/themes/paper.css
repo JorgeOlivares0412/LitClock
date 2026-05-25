@@ -1,48 +1,114 @@
-/* ─── Paper theme ────────────────────────────────────────────────
-   Warm off-white page, dark ink, generous leading.
-   Inspired by the interior of a well-made paperback.
-──────────────────────────────────────────────────────────────── */
+/* ─────────────────────────────────────────────────────────────────
+   LitClock Theme System
+
+   Each theme defines:
+     --bg               background
+     --text-primary     quote body, attribution — always #000 light / warm-white dark
+     --text-muted       date/clock header — text-primary at 65% opacity
+     --border           input underlines, dividers
+     --font-body        typeface for quotes, attribution, settings text
+     --font-header      SF Pro Text Bold for date/clock — same across all themes
+     --font-weight-body body font-weight: 400 for serifs/Avenir, 500 for Bold theme
+     --qd-s/m/l         desktop font-size caps used by clamp() in QuoteDisplay
+     --quote-leading    line-height for quote text
+     --attr-size        attribution font size
+     --date-size        date/clock font size
+
+   Inverted variants ([data-invert="true"]) share one dark bg (#111111)
+   across all themes. Only the text colour (the "accent") differs,
+   each echoing the warmth of its light-mode palette.
+────────────────────────────────────────────────────────────────── */
+
+/* ── Paper ── warm off-white · Charter · generous leading ─────── */
 [data-theme="paper"] {
-	--bg:             #eae7e0;
-	--text-primary:   #1c1a17;
-	--text-secondary: #5c5954;
-	--text-muted:     #938f89;
-	--border:         rgba(28, 26, 23, 0.12);
+	--bg:              #EEEDED;
+	--text-primary:    #000000;
+	--text-muted:      rgba(0, 0, 0, 0.65);
+	--border:          rgba(0, 0, 0, 0.10);
 
-	--font-serif: 'Lora', 'Georgia', serif;
+	--font-body:       'Charter', 'Georgia', serif;
+	--font-header:     'SF Pro Text', -apple-system, system-ui, sans-serif;
+	--font-weight-body: 400;
 
-	/* Quote sizes — short / medium / long quote length classes */
-	--qs-s: 1.65rem;   --qs-m: 1.3rem;   --qs-l: 1.05rem;
-	--qt-s: 2rem;      --qt-m: 1.6rem;   --qt-l: 1.3rem;
-	--qd-s: 2.4rem;    --qd-m: 1.9rem;   --qd-l: 1.55rem;
-
-	--quote-leading:  1.78;
-	--attr-size:      0.95rem;
-	--date-size:      0.82rem;
+	--qd-s: 2.4rem;   --qd-m: 1.9rem;   --qd-l: 1.55rem;
+	--quote-leading:   1.78;
+	--attr-size:       0.95rem;
+	--date-size:       0.82rem;
+}
+[data-theme="paper"][data-invert="true"] {
+	--bg:           #111111;
+	--text-primary: #EDE9E3;
+	--text-muted:   rgba(237, 233, 227, 0.65);
+	--border:       rgba(255, 255, 255, 0.10);
 }
 
-/* ─── Future theme stubs (tokens only, no design yet) ──────────── */
+/* ── Quiet ── warm sand · Georgia · classic editorial ────────── */
 [data-theme="quiet"] {
-	--bg: #f5f4f0; --text-primary: #222; --text-muted: #999;
-	--border: rgba(0,0,0,0.1); --font-serif: 'Lora', serif;
-	--qs-s: 1.65rem; --qs-m: 1.3rem; --qs-l: 1.05rem;
-	--qt-s: 2rem;    --qt-m: 1.6rem; --qt-l: 1.3rem;
-	--qd-s: 2.4rem;  --qd-m: 1.9rem; --qd-l: 1.55rem;
-	--quote-leading: 1.78; --attr-size: 0.95rem; --date-size: 0.82rem;
+	--bg:              #F1E1C9;
+	--text-primary:    #000000;
+	--text-muted:      rgba(0, 0, 0, 0.65);
+	--border:          rgba(0, 0, 0, 0.10);
+
+	--font-body:       'Georgia', 'Times New Roman', serif;
+	--font-header:     'SF Pro Text', -apple-system, system-ui, sans-serif;
+	--font-weight-body: 400;
+
+	--qd-s: 2.4rem;   --qd-m: 1.9rem;   --qd-l: 1.55rem;
+	--quote-leading:   1.78;
+	--attr-size:       0.95rem;
+	--date-size:       0.82rem;
 }
+[data-theme="quiet"][data-invert="true"] {
+	--bg:           #111111;
+	--text-primary: #F0DCC2;
+	--text-muted:   rgba(240, 220, 194, 0.65);
+	--border:       rgba(255, 255, 255, 0.10);
+}
+
+/* ── Focus ── clean cream · Avenir Next · modern & airy ─────── */
 [data-theme="focus"] {
-	--bg: #141210; --text-primary: #e8e4dc; --text-muted: #6a6660;
-	--border: rgba(232,228,220,0.12); --font-serif: 'Lora', serif;
-	--qs-s: 1.65rem; --qs-m: 1.3rem; --qs-l: 1.05rem;
-	--qt-s: 2rem;    --qt-m: 1.6rem; --qt-l: 1.3rem;
-	--qd-s: 2.4rem;  --qd-m: 1.9rem; --qd-l: 1.55rem;
-	--quote-leading: 1.78; --attr-size: 0.95rem; --date-size: 0.82rem;
+	--bg:              #FFFCF4;
+	--text-primary:    #000000;
+	--text-muted:      rgba(0, 0, 0, 0.65);
+	--border:          rgba(0, 0, 0, 0.10);
+
+	--font-body:       'Avenir Next', -apple-system, system-ui, sans-serif;
+	--font-header:     'SF Pro Text', -apple-system, system-ui, sans-serif;
+	--font-weight-body: 400;
+
+	/* Slightly tighter sizing — Avenir's large x-height reads bigger */
+	--qd-s: 2.2rem;   --qd-m: 1.75rem;  --qd-l: 1.42rem;
+	--quote-leading:   1.65;
+	--attr-size:       0.92rem;
+	--date-size:       0.82rem;
 }
+[data-theme="focus"][data-invert="true"] {
+	--bg:           #111111;
+	--text-primary: #F5F3EE;
+	--text-muted:   rgba(245, 243, 238, 0.65);
+	--border:       rgba(255, 255, 255, 0.10);
+}
+
+/* ── Bold ── pure white · SF Pro Text · high-contrast precision  */
 [data-theme="bold"] {
-	--bg: #1a1714; --text-primary: #f0ece4; --text-muted: #6e6a64;
-	--border: rgba(240,236,228,0.12); --font-serif: 'Lora', serif;
-	--qs-s: 1.65rem; --qs-m: 1.3rem; --qs-l: 1.05rem;
-	--qt-s: 2rem;    --qt-m: 1.6rem; --qt-l: 1.3rem;
-	--qd-s: 2.4rem;  --qd-m: 1.9rem; --qd-l: 1.55rem;
-	--quote-leading: 1.78; --attr-size: 0.95rem; --date-size: 0.82rem;
+	--bg:              #FFFFFF;
+	--text-primary:    #000000;
+	--text-muted:      rgba(0, 0, 0, 0.65);
+	--border:          rgba(0, 0, 0, 0.10);
+
+	--font-body:       'SF Pro Text', -apple-system, system-ui, sans-serif;
+	--font-header:     'SF Pro Text', -apple-system, system-ui, sans-serif;
+	--font-weight-body: 500;   /* Medium — one step above Regular */
+
+	/* Slightly tighter — SF Pro Text reads big at large sizes */
+	--qd-s: 2.2rem;   --qd-m: 1.75rem;  --qd-l: 1.42rem;
+	--quote-leading:   1.62;
+	--attr-size:       0.92rem;
+	--date-size:       0.82rem;
+}
+[data-theme="bold"][data-invert="true"] {
+	--bg:           #111111;
+	--text-primary: #FFFFFF;
+	--text-muted:   rgba(255, 255, 255, 0.65);
+	--border:       rgba(255, 255, 255, 0.10);
 }

@@ -11,6 +11,7 @@ const defaults = {
 	updateInterval: 1,        // 1 | 5 | 10 | 15 (minutes)
 	displayExactTime: true,
 	sfwOnly: false,
+	invert: false,
 	theme: 'paper'            // 'paper' | 'quiet' | 'focus' | 'bold'
 };
 
