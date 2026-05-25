@@ -49,6 +49,7 @@
 		font-style: normal;
 		text-align: left;
 		width: 100%;
+		white-space: pre-line;
 	}
 
 	/*

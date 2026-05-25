@@ -52,7 +52,7 @@ function sanitizeText(str) {
 	if (!str) return '';
 
 	let result = str
-		.replace(/<br\s*\/?>/gi, ' ')  // <br/> → space
+		.replace(/<br\s*\/?>/gi, '\n')  // <br/> → real newline, preserved for rendering
 		.replace(/<[^>]+>/g, '');      // strip any remaining tags
 
 	// Convert mathematical alphanumeric symbols (U+1D400–U+1D7FF range)
@@ -79,7 +79,9 @@ function sanitizeText(str) {
 		})
 		.join('');
 
-	return result.replace(/\s+/g, ' ');  // collapse multiple spaces
+	return result
+		.replace(/[^\S\n]+/g, ' ')   // collapse spaces/tabs but NOT newlines
+		.replace(/\n{3,}/g, '\n\n'); // cap at two consecutive line breaks
 }
 
 /**
