@@ -6,7 +6,14 @@
  */
 export function getCurrentTime(settings) {
 	if (settings.timeMode === 'manual' && settings.timeOverride) {
-		return settings.timeOverride;
+		const { hour, minute, setAt } = settings.timeOverride;
+		if (setAt) {
+			// Tick forward from the moment the override was set
+			const elapsedMinutes = Math.floor((Date.now() - setAt) / 60000);
+			const total = ((hour * 60 + minute + elapsedMinutes) % 1440 + 1440) % 1440;
+			return { hour: Math.floor(total / 60), minute: total % 60 };
+		}
+		return { hour, minute }; // legacy: no setAt → frozen
 	}
 	const now = new Date();
 	return { hour: now.getHours(), minute: now.getMinutes() };
@@ -19,7 +26,26 @@ export function getCurrentTime(settings) {
  */
 export function getCurrentDate(settings) {
 	if (settings.dateMode === 'manual' && settings.dateOverride) {
-		return settings.dateOverride;
+		const { day, month, year } = settings.dateOverride;
+
+		// When time is also manually set, couple date to the time offset so
+		// midnight crossings naturally advance the date.
+		if (settings.timeMode === 'manual' && settings.timeOverride?.setAt) {
+			const { hour, minute, setAt } = settings.timeOverride;
+			const elapsedMinutes = Math.floor((Date.now() - setAt) / 60000);
+			const dayOffset = Math.floor((hour * 60 + minute + elapsedMinutes) / 1440);
+			const d = new Date(year, month - 1, day + dayOffset);
+			return { day: d.getDate(), month: d.getMonth() + 1, year: d.getFullYear() };
+		}
+
+		// Date-only override: advance by whole elapsed days from setAt
+		if (settings.dateOverride.setAt) {
+			const elapsedDays = Math.floor((Date.now() - settings.dateOverride.setAt) / 86400000);
+			const d = new Date(year, month - 1, day + elapsedDays);
+			return { day: d.getDate(), month: d.getMonth() + 1, year: d.getFullYear() };
+		}
+
+		return { day, month, year }; // legacy: no setAt → frozen
 	}
 	const now = new Date();
 	return { day: now.getDate(), month: now.getMonth() + 1, year: now.getFullYear() };

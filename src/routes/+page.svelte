@@ -43,10 +43,8 @@
 
 	function startClockTick() {
 		clockTimer = setInterval(() => {
-			if ($settings.timeMode === 'auto') {
-				displayTime = getCurrentTime($settings);
-				displayDate = getCurrentDate($settings);
-			}
+			displayTime = getCurrentTime($settings);
+			displayDate = getCurrentDate($settings);
 		}, 1000);
 	}
 

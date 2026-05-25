@@ -4,14 +4,21 @@
 	/** @type {{ onClose: () => void }} */
 	let { onClose } = $props();
 
-	// Seed manual fields with current override, or live current values as defaults
+	// Seed manual fields with the stored override values (hour/minute/day/month/year
+	// only — exclude setAt so the inputs always show the user's starting point)
 	const seedDate = () => {
-		if ($settings.dateOverride) return { ...$settings.dateOverride };
+		if ($settings.dateOverride) {
+			const { day, month, year } = $settings.dateOverride;
+			return { day, month, year };
+		}
 		const n = new Date();
 		return { day: n.getDate(), month: n.getMonth() + 1, year: n.getFullYear() };
 	};
 	const seedTime = () => {
-		if ($settings.timeOverride) return { ...$settings.timeOverride };
+		if ($settings.timeOverride) {
+			const { hour, minute } = $settings.timeOverride;
+			return { hour, minute };
+		}
 		const n = new Date();
 		return { hour: n.getHours(), minute: n.getMinutes() };
 	};
@@ -24,7 +31,7 @@
 		if (mode === 'auto') {
 			settings.update({ dateMode: 'auto', dateOverride: null });
 		} else {
-			settings.update({ dateMode: 'manual', dateOverride: { ...manualDate } });
+			settings.update({ dateMode: 'manual', dateOverride: { ...manualDate, setAt: Date.now() } });
 		}
 	}
 
@@ -32,7 +39,7 @@
 		if (mode === 'auto') {
 			settings.update({ timeMode: 'auto', timeOverride: null });
 		} else {
-			settings.update({ timeMode: 'manual', timeOverride: { ...manualTime } });
+			settings.update({ timeMode: 'manual', timeOverride: { ...manualTime, setAt: Date.now() } });
 		}
 	}
 
@@ -42,7 +49,7 @@
 		const limits = { day: [1, 31], month: [1, 12], year: [2000, 2100] };
 		const [min, max] = limits[field];
 		manualDate = { ...manualDate, [field]: Math.min(max, Math.max(min, val)) };
-		settings.update({ dateMode: 'manual', dateOverride: { ...manualDate } });
+		settings.update({ dateMode: 'manual', dateOverride: { ...manualDate, setAt: Date.now() } });
 	}
 
 	function onTimeField(field, raw) {
@@ -50,7 +57,7 @@
 		if (isNaN(val)) return;
 		const max = field === 'hour' ? 23 : 59;
 		manualTime = { ...manualTime, [field]: Math.min(max, Math.max(0, val)) };
-		settings.update({ timeMode: 'manual', timeOverride: { ...manualTime } });
+		settings.update({ timeMode: 'manual', timeOverride: { ...manualTime, setAt: Date.now() } });
 	}
 
 	function padTwo(n) {
