@@ -52,8 +52,7 @@ function sanitizeText(str) {
 	return str
 		.replace(/<br\s*\/?>/gi, ' ')  // <br/> → space
 		.replace(/<[^>]+>/g, '')        // strip any remaining tags
-		.replace(/\s+/g, ' ')           // collapse multiple spaces
-		.trim();
+		.replace(/\s+/g, ' ');          // collapse multiple spaces
 }
 
 /**
