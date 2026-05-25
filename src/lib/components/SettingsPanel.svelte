@@ -320,7 +320,8 @@
 		transition: opacity 0.1s;
 	}
 	.opt:hover { opacity: 0.6; }
-	.opt.selected { font-weight: 700; }
+	.opt:focus { outline: none; }
+	.opt.selected { font-weight: var(--font-weight-strong); }
 
 	/* Manual field group — muted when inactive, full color when active */
 	.field-group {
