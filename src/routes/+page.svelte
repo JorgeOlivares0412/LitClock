@@ -131,7 +131,7 @@
 	}
 
 	.em-dash {
-		font-family: var(--font-serif);
+		font-family: var(--font-body);
 		font-size: 1.3rem;
 		color: var(--text-muted);
 		opacity: 0.4;

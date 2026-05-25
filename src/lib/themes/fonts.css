@@ -1,17 +1,21 @@
 /* ─────────────────────────────────────────────────────────────────
    LitClock — Local Font Declarations
 
-   TTC collections (Charter, Avenir Next) declare local() first so
-   browsers on macOS pull the exact named variant from the system
-   rather than guessing which sub-font to use from the collection.
-   The url() src is the cross-platform fallback.
+   Only the weights actually requested in CSS are declared.
+   Italic variants are omitted — all text in this app renders with
+   font-style: normal (sanitizeText strips <em> and all HTML from
+   quote data, and every CSS rule explicitly sets normal).
+
+   TTC collections (Charter, Avenir Next) use local() first so
+   macOS browsers pull the correct named variant directly from the
+   system instead of guessing from the collection. The url() is a
+   cross-platform fallback.
 
    Weight map:
-     400  Regular/normal body weight
-     500  Medium — Bold theme standard body text
-     600  Semibold — (italic/strong fallback for SF Pro)
-     700  Bold — all headers + strong time text (most themes)
-     800  Heavy — strong time text in Bold theme only
+     400  Regular — Paper / Quiet / Focus body text
+     500  Medium  — Bold theme body text
+     700  Bold    — all headers + selected UI states (every theme)
+     800  Heavy   — Bold theme time text (contrast over Medium body)
 ────────────────────────────────────────────────────────────────── */
 
 /* ── SF Pro Text ─────────────────────────────────────────────── */
@@ -24,37 +28,9 @@
 }
 @font-face {
 	font-family: 'SF Pro Text';
-	src: url('../assets/fonts/SF-Pro-Text-MediumItalic.otf') format('opentype');
-	font-weight: 500;
-	font-style: italic;
-	font-display: swap;
-}
-@font-face {
-	font-family: 'SF Pro Text';
-	src: url('../assets/fonts/SF-Pro-Text-Semibold.otf') format('opentype');
-	font-weight: 600;
-	font-style: normal;
-	font-display: swap;
-}
-@font-face {
-	font-family: 'SF Pro Text';
-	src: url('../assets/fonts/SF-Pro-Text-SemiboldItalic.otf') format('opentype');
-	font-weight: 600;
-	font-style: italic;
-	font-display: swap;
-}
-@font-face {
-	font-family: 'SF Pro Text';
 	src: url('../assets/fonts/SF-Pro-Text-Bold.otf') format('opentype');
 	font-weight: 700;
 	font-style: normal;
-	font-display: swap;
-}
-@font-face {
-	font-family: 'SF Pro Text';
-	src: url('../assets/fonts/SF-Pro-Text-BoldItalic.otf') format('opentype');
-	font-weight: 700;
-	font-style: italic;
 	font-display: swap;
 }
 @font-face {
@@ -64,18 +40,8 @@
 	font-style: normal;
 	font-display: swap;
 }
-@font-face {
-	font-family: 'SF Pro Text';
-	src: url('../assets/fonts/SF-Pro-Text-HeavyItalic.otf') format('opentype');
-	font-weight: 800;
-	font-style: italic;
-	font-display: swap;
-}
 
-/* ── Charter (Paper theme body) ──────────────────────────────────
-   local() names match the PostScript names Apple uses on macOS.
-   The TTC fallback is included for non-macOS environments.
-─────────────────────────────────────────────────────────────────*/
+/* ── Charter (Paper theme body) ──────────────────────────────── */
 @font-face {
 	font-family: 'Charter';
 	src: local('Charter'), url('../assets/fonts/Charter.ttc') format('truetype');
@@ -85,23 +51,9 @@
 }
 @font-face {
 	font-family: 'Charter';
-	src: local('Charter-Italic'), url('../assets/fonts/Charter.ttc') format('truetype');
-	font-weight: 400;
-	font-style: italic;
-	font-display: swap;
-}
-@font-face {
-	font-family: 'Charter';
 	src: local('Charter-Bold'), url('../assets/fonts/Charter.ttc') format('truetype');
 	font-weight: 700;
 	font-style: normal;
-	font-display: swap;
-}
-@font-face {
-	font-family: 'Charter';
-	src: local('Charter-BoldItalic'), url('../assets/fonts/Charter.ttc') format('truetype');
-	font-weight: 700;
-	font-style: italic;
 	font-display: swap;
 }
 
@@ -115,43 +67,18 @@
 }
 @font-face {
 	font-family: 'Georgia';
-	src: url('../assets/fonts/Georgia Italic.ttf') format('truetype');
-	font-weight: 400;
-	font-style: italic;
-	font-display: swap;
-}
-@font-face {
-	font-family: 'Georgia';
 	src: url('../assets/fonts/Georgia Bold.ttf') format('truetype');
 	font-weight: 700;
 	font-style: normal;
 	font-display: swap;
 }
-@font-face {
-	font-family: 'Georgia';
-	src: url('../assets/fonts/Georgia Bold Italic.ttf') format('truetype');
-	font-weight: 700;
-	font-style: italic;
-	font-display: swap;
-}
 
-/* ── Avenir Next (Focus theme body) ──────────────────────────────
-   local() names match Apple's PostScript naming convention.
-   AvenirNext-Regular ensures the 400 declaration resolves to the
-   true Regular weight, not whichever sub-font is first in the TTC.
-─────────────────────────────────────────────────────────────────*/
+/* ── Avenir Next (Focus theme body) ──────────────────────────── */
 @font-face {
 	font-family: 'Avenir Next';
 	src: local('AvenirNext-Regular'), url('../assets/fonts/Avenir Next.ttc') format('truetype');
 	font-weight: 400;
 	font-style: normal;
-	font-display: swap;
-}
-@font-face {
-	font-family: 'Avenir Next';
-	src: local('AvenirNext-Italic'), url('../assets/fonts/Avenir Next.ttc') format('truetype');
-	font-weight: 400;
-	font-style: italic;
 	font-display: swap;
 }
 @font-face {
