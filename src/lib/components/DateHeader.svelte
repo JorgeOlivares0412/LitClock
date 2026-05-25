@@ -64,8 +64,8 @@
 		text-transform: uppercase;
 	}
 
-	/* Landscape phones: compress header so it doesn't eat vertical space */
-	@media (max-height: 500px) {
+	/* Landscape phones: compress header — must be last to override tablet width query */
+	@media (orientation: landscape) and (max-height: 600px) {
 		.date-header { padding: 0.4rem 1rem 0.3rem; }
 	}
 </style>

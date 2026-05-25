@@ -25,16 +25,17 @@
 		font-weight: var(--font-weight-body);
 	}
 
-	/* Landscape phones: compress footer so it doesn't eat vertical space */
-	@media (max-height: 500px) {
-		.attribution { padding: 0.3rem 1.75rem 0.5rem; }
-	}
-
 	@media (min-width: 600px) {
 		.attribution { padding: 1rem 2.5rem 2.5rem; }
 	}
 
 	@media (min-width: 1024px) {
 		.attribution { padding: 1.25rem 3.5rem 3rem; }
+	}
+
+	/* Landscape phones: compress footer — must be last to override tablet width query.
+	   Extra env() bottom padding keeps text above the home indicator. */
+	@media (orientation: landscape) and (max-height: 600px) {
+		.attribution { padding: 0.3rem 1.75rem calc(0.4rem + env(safe-area-inset-bottom, 0px)); }
 	}
 </style>

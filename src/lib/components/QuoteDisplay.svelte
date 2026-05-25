@@ -70,19 +70,10 @@
 	}
 
 	/*
-	 * Landscape phones (short viewport, wide screen): drop the vw
-	 * constraint and use dvh directly with higher coefficients so the
-	 * wider layout can carry larger text. Tighten wrapper padding to
-	 * reclaim vertical space.
+	 * Landscape phones (short viewport, wide screen): must come AFTER the
+	 * min-width tablet/desktop queries so it overrides them — a landscape
+	 * iPhone is ~844px wide and would otherwise match the tablet breakpoint.
 	 */
-	@media (max-height: 500px) {
-		.quote-wrapper { padding: 0.5rem 1.75rem; }
-		.q-s  { font-size: clamp(1.0rem,  7.5dvh, var(--qd-s)); }
-		.q-m  { font-size: clamp(0.9rem,  6.5dvh, var(--qd-m)); }
-		.q-l  { font-size: clamp(0.78rem, 5.0dvh, var(--qd-l)); }
-		.q-xl { font-size: clamp(0.68rem, 4.0dvh, 1.2rem);      }
-	}
-
 	/* ── Tablet ── */
 	@media (min-width: 600px) {
 		.quote-wrapper { padding: 2rem 2.5rem; }
@@ -91,5 +82,14 @@
 	/* ── Desktop ── */
 	@media (min-width: 1024px) {
 		.quote-wrapper { padding: 2.5rem 3.5rem; }
+	}
+
+	/* ── Landscape phones — must be last to override tablet width query ── */
+	@media (orientation: landscape) and (max-height: 600px) {
+		.quote-wrapper { padding: 0.5rem 1.75rem; }
+		.q-s  { font-size: clamp(1.0rem,  7.5dvh, var(--qd-s)); }
+		.q-m  { font-size: clamp(0.9rem,  6.5dvh, var(--qd-m)); }
+		.q-l  { font-size: clamp(0.78rem, 5.0dvh, var(--qd-l)); }
+		.q-xl { font-size: clamp(0.68rem, 4.0dvh, 1.2rem);      }
 	}
 </style>
