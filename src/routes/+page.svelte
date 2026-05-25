@@ -71,6 +71,20 @@
 		displayDate = getCurrentDate($settings);
 	});
 
+	// Derive the quote size class so attribution can match the quote font size
+	let quoteCharCount = $derived(
+		quote
+			? (quote.quote_first ?? '').length +
+			  (quote.quote_time_case ?? '').length +
+			  (quote.quote_last ?? '').length
+			: 0
+	);
+	let quoteSizeClass = $derived(
+		quoteCharCount < 150 ? 'q-s' :
+		quoteCharCount < 300 ? 'q-m' :
+		quoteCharCount < 500 ? 'q-l' : 'q-xl'
+	);
+
 	onMount(() => {
 		refreshQuote();
 		scheduleNextQuote();
@@ -93,7 +107,13 @@
 
 	{#if quote}
 		<QuoteDisplay {quote} />
-		<div class="attribution-row">
+		<div
+			class="attribution-row"
+			class:q-s={quoteSizeClass === 'q-s'}
+			class:q-m={quoteSizeClass === 'q-m'}
+			class:q-l={quoteSizeClass === 'q-l'}
+			class:q-xl={quoteSizeClass === 'q-xl'}
+		>
 			<Attribution title={quote.title} author={quote.author} />
 		</div>
 	{:else}
@@ -110,20 +130,32 @@
 
 <style>
 	.page {
-		/* Fallback 100% inherits html's -webkit-fill-available (iOS PWA).
-		   Once JS runs, --app-height overrides with the precise
-		   window.visualViewport.height for the actual visible area. */
 		height: var(--app-height, 100%);
 		overflow: hidden;
 		display: flex;
 		flex-direction: column;
 		background-color: var(--bg);
+		/* Edge buffer + Dynamic Island safe area (left/right in landscape).
+		   max() ensures at least 0.5rem breathing room on all sides even
+		   when env() returns 0. Bottom covers the home indicator (~34px). */
+		padding-top:    max(0.5rem, env(safe-area-inset-top,    0px));
+		padding-bottom: max(0.5rem, env(safe-area-inset-bottom, 0px));
+		padding-left:   env(safe-area-inset-left,  0px);
+		padding-right:  env(safe-area-inset-right, 0px);
 	}
 
 	/* Staggered attribution: left ~28% is empty, matching the mockup */
 	.attribution-row {
 		padding-left: 28%;
 	}
+
+	/* Attribution font size matches the current quote tier — same clamp
+	   values as QuoteDisplay so title/author scale identically to the quote.
+	   Attribution.svelte uses font-size: inherit to pick this up. */
+	.attribution-row.q-s  { font-size: clamp(1.1rem,  min(5.5dvh, 8vw),   var(--qd-s)); }
+	.attribution-row.q-m  { font-size: clamp(0.95rem, min(4.2dvh, 5.5vw),  var(--qd-m)); }
+	.attribution-row.q-l  { font-size: clamp(0.82rem, min(3.4dvh, 4.5vw),  var(--qd-l)); }
+	.attribution-row.q-xl { font-size: clamp(0.72rem, min(2.7dvh, 3.8vw),  1.2rem);      }
 
 	/* Empty / loading state — holds the flex layout without showing anything */
 	.empty-state {
@@ -151,10 +183,16 @@
 		.page {
 			max-width: 860px;
 			margin: 0 auto;
-			/* Keep the themed bg behind the constrained column */
-			box-shadow: none;
 		}
 		.attribution-row { padding-left: 32%; }
 		.empty-state { padding: 2.5rem 3.5rem; }
+	}
+
+	/* ── Landscape phones — attribution size overrides, same as QuoteDisplay ── */
+	@media (orientation: landscape) and (max-height: 600px) {
+		.attribution-row.q-s  { font-size: clamp(1.0rem,  7.5dvh, var(--qd-s)); }
+		.attribution-row.q-m  { font-size: clamp(0.9rem,  6.5dvh, var(--qd-m)); }
+		.attribution-row.q-l  { font-size: clamp(0.78rem, 5.0dvh, var(--qd-l)); }
+		.attribution-row.q-xl { font-size: clamp(0.68rem, 4.0dvh, 1.2rem);      }
 	}
 </style>

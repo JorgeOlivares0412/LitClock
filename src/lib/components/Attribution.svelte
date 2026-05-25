@@ -19,7 +19,7 @@
 	.title,
 	.author {
 		font-family: var(--font-body);
-		font-size: var(--attr-size);
+		font-size: inherit;
 		color: var(--text-primary);
 		line-height: 1.7;
 		font-weight: var(--font-weight-body);
