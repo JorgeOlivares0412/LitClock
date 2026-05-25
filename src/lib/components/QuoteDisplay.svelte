@@ -17,10 +17,11 @@
 		(quote.quote_last ?? '').length
 	);
 
-	// s = short (<150), m = medium (150-300), l = long (>300)
+	// s = short (<150), m = medium (150-299), l = long (300-499), xl = very long (≥500)
 	let sizeClass = $derived(
 		charCount < 150 ? 'q-s' :
-		charCount < 300 ? 'q-m' : 'q-l'
+		charCount < 300 ? 'q-m' :
+		charCount < 500 ? 'q-l' : 'q-xl'
 	);
 </script>
 
@@ -33,11 +34,11 @@
 <style>
 	.quote-wrapper {
 		flex: 1;
+		min-height: 0;
 		display: flex;
 		align-items: center;
 		padding: 1.5rem 1.75rem;
-		/* Allow scroll if quote is truly enormous */
-		overflow-y: auto;
+		overflow: hidden;
 	}
 
 	.quote-text {
@@ -50,10 +51,16 @@
 		width: 100%;
 	}
 
-	/* ── Mobile sizes ── */
-	.q-s { font-size: var(--qs-s); }
-	.q-m { font-size: var(--qs-m); }
-	.q-l { font-size: var(--qs-l); }
+	/*
+	 * Font sizes use clamp() with dvh units so they scale continuously
+	 * with the actual viewport height — no media-query jumping needed.
+	 * The upper bound matches the desktop theme vars; the dvh value
+	 * ensures the text stays within the fixed frame on small screens.
+	 */
+	.q-s  { font-size: clamp(1.1rem,  5.5dvh, var(--qd-s)); }
+	.q-m  { font-size: clamp(0.95rem, 4.2dvh, var(--qd-m)); }
+	.q-l  { font-size: clamp(0.82rem, 3.4dvh, var(--qd-l)); }
+	.q-xl { font-size: clamp(0.72rem, 2.7dvh, 1.2rem);      }
 
 	/* Bolded time text — weight only, no size shift */
 	.quote-text :global(strong) {
@@ -63,17 +70,11 @@
 
 	/* ── Tablet ── */
 	@media (min-width: 600px) {
-		.q-s { font-size: var(--qt-s); }
-		.q-m { font-size: var(--qt-m); }
-		.q-l { font-size: var(--qt-l); }
 		.quote-wrapper { padding: 2rem 2.5rem; }
 	}
 
 	/* ── Desktop ── */
 	@media (min-width: 1024px) {
-		.q-s { font-size: var(--qd-s); }
-		.q-m { font-size: var(--qd-m); }
-		.q-l { font-size: var(--qd-l); }
 		.quote-wrapper { padding: 2.5rem 3.5rem; }
 	}
 </style>

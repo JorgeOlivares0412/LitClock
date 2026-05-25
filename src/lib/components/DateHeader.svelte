@@ -43,6 +43,7 @@
 
 <style>
 	.date-header {
+		flex-shrink: 0;
 		text-align: center;
 		padding: 1.75rem 1rem 1rem;
 		cursor: default;

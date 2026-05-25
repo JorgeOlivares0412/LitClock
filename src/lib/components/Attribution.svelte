@@ -10,6 +10,7 @@
 
 <style>
 	.attribution {
+		flex-shrink: 0;
 		text-align: right;
 		padding: 1rem 1.75rem 2.25rem;
 		user-select: none;
