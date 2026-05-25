@@ -51,6 +51,15 @@ async function fetchQuoteFile(time) {
 function sanitizeText(str) {
 	if (!str) return '';
 
+	// Decode HTML entities first (handles &amp; &lt; &rsquo; &#39; etc.)
+	// textarea.innerHTML decodes all named and numeric entities without
+	// executing any scripts — safe for untrusted content.
+	if (typeof document !== 'undefined') {
+		const el = document.createElement('textarea');
+		el.innerHTML = str;
+		str = el.value;
+	}
+
 	let result = str
 		.replace(/<br\s*\/?>/gi, '\n')  // <br/> → real newline, preserved for rendering
 		.replace(/<[^>]+>/g, '');      // strip any remaining tags
