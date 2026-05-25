@@ -375,7 +375,7 @@
 		opacity: 0.35;
 		transition: opacity 0.15s;
 	}
-	.field-group.active { opacity: 1; }
+	.field-group.active { opacity: 1; font-weight: var(--font-weight-strong); }
 	.field-group:focus { outline: none; }
 
 	/* Number inputs that look like text */
@@ -386,7 +386,7 @@
 		background: transparent;
 		border: none;
 		border-bottom: 1px solid var(--border);
-		width: 2.4ch;
+		width: 3ch;
 		text-align: center;
 		padding: 0 0.1rem 0.1rem;
 		appearance: textfield;
@@ -398,7 +398,7 @@
 		outline: none;
 		border-bottom-color: var(--text-primary);
 	}
-	.field.year { width: 4ch; }
+	.field.year { width: 5ch; }
 
 	/* Done button */
 	.done {

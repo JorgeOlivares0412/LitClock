@@ -10,9 +10,17 @@
 html {
 	/* Smooth theme transitions without flicker on first paint */
 	transition: background-color 0.3s ease, color 0.3s ease;
+	/* iOS PWA standalone: -webkit-fill-available correctly accounts for
+	   the status bar in both portrait and landscape on initial load,
+	   before the JS --app-height variable is set. Must come after 100%
+	   so it overrides it in WebKit while other engines ignore it. */
+	height: 100%;
+	height: -webkit-fill-available;
+	overflow: hidden;
+	touch-action: pan-x pan-y;
 }
 
-html, body {
+body {
 	height: 100%;
 	overflow: hidden;
 	touch-action: pan-x pan-y;

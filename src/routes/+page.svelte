@@ -110,7 +110,10 @@
 
 <style>
 	.page {
-		height: var(--app-height, 100dvh);
+		/* Fallback 100% inherits html's -webkit-fill-available (iOS PWA).
+		   Once JS runs, --app-height overrides with the precise
+		   window.visualViewport.height for the actual visible area. */
+		height: var(--app-height, 100%);
 		overflow: hidden;
 		display: flex;
 		flex-direction: column;
