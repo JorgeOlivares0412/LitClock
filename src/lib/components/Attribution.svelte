@@ -25,6 +25,11 @@
 		font-weight: var(--font-weight-body);
 	}
 
+	/* Landscape phones: compress footer so it doesn't eat vertical space */
+	@media (max-height: 500px) {
+		.attribution { padding: 0.3rem 1.75rem 0.5rem; }
+	}
+
 	@media (min-width: 600px) {
 		.attribution { padding: 1rem 2.5rem 2.5rem; }
 	}

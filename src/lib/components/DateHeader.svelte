@@ -63,4 +63,9 @@
 		font-weight: 700;
 		text-transform: uppercase;
 	}
+
+	/* Landscape phones: compress header so it doesn't eat vertical space */
+	@media (max-height: 500px) {
+		.date-header { padding: 0.4rem 1rem 0.3rem; }
+	}
 </style>

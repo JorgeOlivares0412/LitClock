@@ -52,20 +52,34 @@
 	}
 
 	/*
-	 * Font sizes use clamp() with dvh units so they scale continuously
-	 * with the actual viewport height — no media-query jumping needed.
-	 * The upper bound matches the desktop theme vars; the dvh value
-	 * ensures the text stays within the fixed frame on small screens.
+	 * Font sizes use min(dvh, vw) as the preferred value so the font
+	 * is constrained by BOTH viewport height (prevents overflow when
+	 * the frame is short) and viewport width (prevents text getting
+	 * huge on narrow portrait phones where dvh would allow it).
 	 */
-	.q-s  { font-size: clamp(1.1rem,  5.5dvh, var(--qd-s)); }
-	.q-m  { font-size: clamp(0.95rem, 4.2dvh, var(--qd-m)); }
-	.q-l  { font-size: clamp(0.82rem, 3.4dvh, var(--qd-l)); }
-	.q-xl { font-size: clamp(0.72rem, 2.7dvh, 1.2rem);      }
+	.q-s  { font-size: clamp(1.1rem,  min(5.5dvh, 8vw),   var(--qd-s)); }
+	.q-m  { font-size: clamp(0.95rem, min(4.2dvh, 5.5vw),  var(--qd-m)); }
+	.q-l  { font-size: clamp(0.82rem, min(3.4dvh, 4.5vw),  var(--qd-l)); }
+	.q-xl { font-size: clamp(0.72rem, min(2.7dvh, 3.8vw),  1.2rem);      }
 
 	/* Bolded time text — weight only, no size shift */
 	.quote-text :global(strong) {
 		font-weight: var(--font-weight-strong);
 		font-style: normal;
+	}
+
+	/*
+	 * Landscape phones (short viewport, wide screen): drop the vw
+	 * constraint and use dvh directly with higher coefficients so the
+	 * wider layout can carry larger text. Tighten wrapper padding to
+	 * reclaim vertical space.
+	 */
+	@media (max-height: 500px) {
+		.quote-wrapper { padding: 0.5rem 1.75rem; }
+		.q-s  { font-size: clamp(1.0rem,  7.5dvh, var(--qd-s)); }
+		.q-m  { font-size: clamp(0.9rem,  6.5dvh, var(--qd-m)); }
+		.q-l  { font-size: clamp(0.78rem, 5.0dvh, var(--qd-l)); }
+		.q-xl { font-size: clamp(0.68rem, 4.0dvh, 1.2rem);      }
 	}
 
 	/* ── Tablet ── */
