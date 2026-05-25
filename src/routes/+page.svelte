@@ -48,15 +48,18 @@
 		}, 1000);
 	}
 
-	// Refresh + reschedule when interval or SFW setting changes
+	// Refresh + reschedule when interval, SFW, or test mode changes
 	let prevInterval = $settings.updateInterval;
 	let prevSfw = $settings.sfwOnly;
+	let prevTestMode = $settings.testMode;
 	$effect(() => {
 		const interval = $settings.updateInterval;
 		const sfw = $settings.sfwOnly;
-		if (interval !== prevInterval || sfw !== prevSfw) {
+		const testMode = $settings.testMode;
+		if (interval !== prevInterval || sfw !== prevSfw || testMode !== prevTestMode) {
 			prevInterval = interval;
 			prevSfw = sfw;
+			prevTestMode = testMode;
 			refreshQuote();
 			scheduleNextQuote();
 		}

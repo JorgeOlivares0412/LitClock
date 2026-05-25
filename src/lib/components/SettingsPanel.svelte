@@ -64,6 +64,21 @@
 		return String(n).padStart(2, '0');
 	}
 
+	// 4-tap on the Settings heading toggles test mode
+	let headingTapCount = $state(0);
+	let headingTapTimer = null;
+
+	function handleHeadingTap() {
+		headingTapCount++;
+		clearTimeout(headingTapTimer);
+		if (headingTapCount >= 4) {
+			headingTapCount = 0;
+			settings.update({ testMode: !$settings.testMode });
+			return;
+		}
+		headingTapTimer = setTimeout(() => { headingTapCount = 0; }, 700);
+	}
+
 	// Activate manual mode when user clicks directly into a field
 	function activateDateManual() {
 		if ($settings.dateMode !== 'manual') setDateMode('manual');
@@ -74,7 +89,14 @@
 </script>
 
 <div class="overlay" role="dialog" aria-modal="true" aria-label="Settings">
-	<p class="heading">Settings</p>
+	<p
+		class="heading"
+		class:test-active={$settings.testMode}
+		role="button"
+		tabindex="0"
+		onclick={handleHeadingTap}
+		onkeydown={(e) => e.key === 'Enter' && handleHeadingTap()}
+	>{$settings.testMode ? 'Test Mode' : 'Settings'}</p>
 
 	<div class="rows">
 
@@ -135,41 +157,48 @@
 		<div class="row">
 			<span class="label">Time</span>
 			<div class="options">
-				<button
-					class="opt"
-					class:selected={$settings.timeMode === 'auto'}
-					onclick={() => setTimeMode('auto')}
-				>Auto</button>
+				{#if $settings.testMode}
+					<!-- In test mode the time source is irrelevant; preserve the
+					     underlying timeMode/timeOverride untouched for when test
+					     mode is turned off. -->
+					<span class="opt selected">Test</span>
+				{:else}
+					<button
+						class="opt"
+						class:selected={$settings.timeMode === 'auto'}
+						onclick={() => setTimeMode('auto')}
+					>Auto</button>
 
-				<span
-					class="field-group"
-					class:active={$settings.timeMode === 'manual'}
-					role="button"
-					tabindex="0"
-					onclick={activateTimeManual}
-					onkeydown={(e) => e.key === 'Enter' && activateTimeManual()}
-				>
-					<input
-						class="field"
-						type="number"
-						min="0" max="23"
-						value={padTwo(manualTime.hour)}
-						placeholder="HH"
-						aria-label="Hour"
-						onfocus={activateTimeManual}
-						onchange={(e) => onTimeField('hour', e.currentTarget.value)}
-					/>
-					<input
-						class="field"
-						type="number"
-						min="0" max="59"
-						value={padTwo(manualTime.minute)}
-						placeholder="MM"
-						aria-label="Minute"
-						onfocus={activateTimeManual}
-						onchange={(e) => onTimeField('minute', e.currentTarget.value)}
-					/>
-				</span>
+					<span
+						class="field-group"
+						class:active={$settings.timeMode === 'manual'}
+						role="button"
+						tabindex="0"
+						onclick={activateTimeManual}
+						onkeydown={(e) => e.key === 'Enter' && activateTimeManual()}
+					>
+						<input
+							class="field"
+							type="number"
+							min="0" max="23"
+							value={padTwo(manualTime.hour)}
+							placeholder="HH"
+							aria-label="Hour"
+							onfocus={activateTimeManual}
+							onchange={(e) => onTimeField('hour', e.currentTarget.value)}
+						/>
+						<input
+							class="field"
+							type="number"
+							min="0" max="59"
+							value={padTwo(manualTime.minute)}
+							placeholder="MM"
+							aria-label="Minute"
+							onfocus={activateTimeManual}
+							onchange={(e) => onTimeField('minute', e.currentTarget.value)}
+						/>
+					</span>
+				{/if}
 			</div>
 		</div>
 
@@ -279,6 +308,13 @@
 		text-transform: uppercase;
 		text-align: center;
 		padding: 0.5rem 0 2rem;
+		cursor: default;
+		-webkit-tap-highlight-color: transparent;
+		outline: none;
+	}
+	/* Subtle indicator when test mode is active */
+	.heading.test-active {
+		color: var(--text-primary);
 	}
 
 	.rows {

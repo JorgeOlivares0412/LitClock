@@ -116,10 +116,20 @@ function sanitizeQuote(quote) {
  * @returns {Promise<object|null>}
  */
 export async function loadQuote(time, settings) {
-	const window = buildTimeWindow(time, settings.updateInterval);
+	let allEntries;
 
-	// Fetch all files in the window in parallel
-	const allEntries = (await Promise.all(window.map(fetchQuoteFile))).flat();
+	if (settings.testMode) {
+		// Test mode: bypass time-window logic, load the single test fixture file
+		try {
+			const res = await fetch(`${base}/data/quotes/test.json`);
+			allEntries = res.ok ? await res.json() : [];
+		} catch {
+			allEntries = [];
+		}
+	} else {
+		const window = buildTimeWindow(time, settings.updateInterval);
+		allEntries = (await Promise.all(window.map(fetchQuoteFile))).flat();
+	}
 
 	// Apply SFW filter
 	const pool = settings.sfwOnly

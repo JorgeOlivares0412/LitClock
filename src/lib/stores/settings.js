@@ -12,6 +12,7 @@ const defaults = {
 	displayExactTime: true,
 	sfwOnly: false,
 	invert: false,
+	testMode: false,
 	theme: 'paper'            // 'paper' | 'quiet' | 'focus' | 'bold'
 };
 
