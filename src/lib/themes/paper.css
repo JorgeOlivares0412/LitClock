@@ -1,0 +1,48 @@
+/* ─── Paper theme ────────────────────────────────────────────────
+   Warm off-white page, dark ink, generous leading.
+   Inspired by the interior of a well-made paperback.
+──────────────────────────────────────────────────────────────── */
+[data-theme="paper"] {
+	--bg:             #eae7e0;
+	--text-primary:   #1c1a17;
+	--text-secondary: #5c5954;
+	--text-muted:     #938f89;
+	--border:         rgba(28, 26, 23, 0.12);
+
+	--font-serif: 'Lora', 'Georgia', serif;
+
+	/* Quote sizes — short / medium / long quote length classes */
+	--qs-s: 1.65rem;   --qs-m: 1.3rem;   --qs-l: 1.05rem;
+	--qt-s: 2rem;      --qt-m: 1.6rem;   --qt-l: 1.3rem;
+	--qd-s: 2.4rem;    --qd-m: 1.9rem;   --qd-l: 1.55rem;
+
+	--quote-leading:  1.78;
+	--attr-size:      0.95rem;
+	--date-size:      0.82rem;
+}
+
+/* ─── Future theme stubs (tokens only, no design yet) ──────────── */
+[data-theme="quiet"] {
+	--bg: #f5f4f0; --text-primary: #222; --text-muted: #999;
+	--border: rgba(0,0,0,0.1); --font-serif: 'Lora', serif;
+	--qs-s: 1.65rem; --qs-m: 1.3rem; --qs-l: 1.05rem;
+	--qt-s: 2rem;    --qt-m: 1.6rem; --qt-l: 1.3rem;
+	--qd-s: 2.4rem;  --qd-m: 1.9rem; --qd-l: 1.55rem;
+	--quote-leading: 1.78; --attr-size: 0.95rem; --date-size: 0.82rem;
+}
+[data-theme="focus"] {
+	--bg: #141210; --text-primary: #e8e4dc; --text-muted: #6a6660;
+	--border: rgba(232,228,220,0.12); --font-serif: 'Lora', serif;
+	--qs-s: 1.65rem; --qs-m: 1.3rem; --qs-l: 1.05rem;
+	--qt-s: 2rem;    --qt-m: 1.6rem; --qt-l: 1.3rem;
+	--qd-s: 2.4rem;  --qd-m: 1.9rem; --qd-l: 1.55rem;
+	--quote-leading: 1.78; --attr-size: 0.95rem; --date-size: 0.82rem;
+}
+[data-theme="bold"] {
+	--bg: #1a1714; --text-primary: #f0ece4; --text-muted: #6e6a64;
+	--border: rgba(240,236,228,0.12); --font-serif: 'Lora', serif;
+	--qs-s: 1.65rem; --qs-m: 1.3rem; --qs-l: 1.05rem;
+	--qt-s: 2rem;    --qt-m: 1.6rem; --qt-l: 1.3rem;
+	--qd-s: 2.4rem;  --qd-m: 1.9rem; --qd-l: 1.55rem;
+	--quote-leading: 1.78; --attr-size: 0.95rem; --date-size: 0.82rem;
+}
