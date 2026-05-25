@@ -64,7 +64,7 @@
 
 	/* Bolded time text — weight only, no size shift */
 	.quote-text :global(strong) {
-		font-weight: 700;
+		font-weight: var(--font-weight-strong);
 		font-style: normal;
 	}
 

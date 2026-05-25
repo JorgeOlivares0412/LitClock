@@ -1,17 +1,17 @@
 /* ─────────────────────────────────────────────────────────────────
    LitClock — Local Font Declarations
-   Loaded by app.css before the theme file.
 
-   SF Pro Text  — headers (all themes) + body/bold for the Bold theme
-   Charter      — body for Paper theme      (.ttc collection)
-   Georgia      — body for Quiet theme      (individual files)
-   Avenir Next  — body for Focus theme      (.ttc collection)
+   TTC collections (Charter, Avenir Next) declare local() first so
+   browsers on macOS pull the exact named variant from the system
+   rather than guessing which sub-font to use from the collection.
+   The url() src is the cross-platform fallback.
 
-   Weight map used across themes:
-     500  Medium   — standard body weight (Bold theme)
-     600  Semibold — bold/strong time text (Bold theme)
-     700  Bold     — all header date/clock text (every theme)
-   Serifs (Charter, Georgia) and Avenir Next use 400/700 natively.
+   Weight map:
+     400  Regular/normal body weight
+     500  Medium — Bold theme standard body text
+     600  Semibold — (italic/strong fallback for SF Pro)
+     700  Bold — all headers + strong time text (most themes)
+     800  Heavy — strong time text in Bold theme only
 ────────────────────────────────────────────────────────────────── */
 
 /* ── SF Pro Text ─────────────────────────────────────────────── */
@@ -57,32 +57,49 @@
 	font-style: italic;
 	font-display: swap;
 }
+@font-face {
+	font-family: 'SF Pro Text';
+	src: url('../assets/fonts/SF-Pro-Text-Heavy.otf') format('opentype');
+	font-weight: 800;
+	font-style: normal;
+	font-display: swap;
+}
+@font-face {
+	font-family: 'SF Pro Text';
+	src: url('../assets/fonts/SF-Pro-Text-HeavyItalic.otf') format('opentype');
+	font-weight: 800;
+	font-style: italic;
+	font-display: swap;
+}
 
-/* ── Charter (Paper theme body) ──────────────────────────────── */
+/* ── Charter (Paper theme body) ──────────────────────────────────
+   local() names match the PostScript names Apple uses on macOS.
+   The TTC fallback is included for non-macOS environments.
+─────────────────────────────────────────────────────────────────*/
 @font-face {
 	font-family: 'Charter';
-	src: url('../assets/fonts/Charter.ttc') format('truetype');
+	src: local('Charter'), url('../assets/fonts/Charter.ttc') format('truetype');
 	font-weight: 400;
 	font-style: normal;
 	font-display: swap;
 }
 @font-face {
 	font-family: 'Charter';
-	src: url('../assets/fonts/Charter.ttc') format('truetype');
+	src: local('Charter-Italic'), url('../assets/fonts/Charter.ttc') format('truetype');
 	font-weight: 400;
 	font-style: italic;
 	font-display: swap;
 }
 @font-face {
 	font-family: 'Charter';
-	src: url('../assets/fonts/Charter.ttc') format('truetype');
+	src: local('Charter-Bold'), url('../assets/fonts/Charter.ttc') format('truetype');
 	font-weight: 700;
 	font-style: normal;
 	font-display: swap;
 }
 @font-face {
 	font-family: 'Charter';
-	src: url('../assets/fonts/Charter.ttc') format('truetype');
+	src: local('Charter-BoldItalic'), url('../assets/fonts/Charter.ttc') format('truetype');
 	font-weight: 700;
 	font-style: italic;
 	font-display: swap;
@@ -118,24 +135,28 @@
 	font-display: swap;
 }
 
-/* ── Avenir Next (Focus theme body) ──────────────────────────── */
+/* ── Avenir Next (Focus theme body) ──────────────────────────────
+   local() names match Apple's PostScript naming convention.
+   AvenirNext-Regular ensures the 400 declaration resolves to the
+   true Regular weight, not whichever sub-font is first in the TTC.
+─────────────────────────────────────────────────────────────────*/
 @font-face {
 	font-family: 'Avenir Next';
-	src: url('../assets/fonts/Avenir Next.ttc') format('truetype');
+	src: local('AvenirNext-Regular'), url('../assets/fonts/Avenir Next.ttc') format('truetype');
 	font-weight: 400;
 	font-style: normal;
 	font-display: swap;
 }
 @font-face {
 	font-family: 'Avenir Next';
-	src: url('../assets/fonts/Avenir Next.ttc') format('truetype');
+	src: local('AvenirNext-Italic'), url('../assets/fonts/Avenir Next.ttc') format('truetype');
 	font-weight: 400;
 	font-style: italic;
 	font-display: swap;
 }
 @font-face {
 	font-family: 'Avenir Next';
-	src: url('../assets/fonts/Avenir Next.ttc') format('truetype');
+	src: local('AvenirNext-Bold'), url('../assets/fonts/Avenir Next.ttc') format('truetype');
 	font-weight: 700;
 	font-style: normal;
 	font-display: swap;
