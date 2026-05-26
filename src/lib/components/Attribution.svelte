@@ -34,8 +34,8 @@
 	}
 
 	/* Landscape phones: compress footer — must be last to override tablet width query.
-	   Extra env() bottom padding keeps text above the home indicator. */
+	   No env(safe-area-inset-bottom) here; .page already handles it. */
 	@media (orientation: landscape) and (max-height: 600px) {
-		.attribution { padding: 0.3rem 1.75rem calc(0.4rem + env(safe-area-inset-bottom, 0px)); }
+		.attribution { padding: 0.3rem 1.75rem 0.4rem; }
 	}
 </style>

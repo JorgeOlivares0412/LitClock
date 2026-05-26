@@ -188,11 +188,11 @@
 		.empty-state { padding: 2.5rem 3.5rem; }
 	}
 
-	/* ── Landscape phones — attribution size overrides, same as QuoteDisplay ── */
+	/* ── Landscape phones — attribution font size overrides, mirrors QuoteDisplay ── */
 	@media (orientation: landscape) and (max-height: 600px) {
-		.attribution-row.q-s  { font-size: clamp(1.0rem,  7.5dvh, var(--qd-s)); }
-		.attribution-row.q-m  { font-size: clamp(0.9rem,  6.5dvh, var(--qd-m)); }
-		.attribution-row.q-l  { font-size: clamp(0.78rem, 5.0dvh, var(--qd-l)); }
-		.attribution-row.q-xl { font-size: clamp(0.68rem, 4.0dvh, 1.2rem);      }
+		.attribution-row.q-s  { font-size: clamp(1.0rem,  6.5dvh, var(--qd-s)); }
+		.attribution-row.q-m  { font-size: clamp(0.9rem,  5.5dvh, var(--qd-m)); }
+		.attribution-row.q-l  { font-size: clamp(0.78rem, 4.0dvh, var(--qd-l)); }
+		.attribution-row.q-xl { font-size: clamp(0.68rem, 3.2dvh, 1.0rem);      }
 	}
 </style>

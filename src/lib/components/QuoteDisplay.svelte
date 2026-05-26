@@ -87,9 +87,14 @@
 	/* ── Landscape phones — must be last to override tablet width query ── */
 	@media (orientation: landscape) and (max-height: 600px) {
 		.quote-wrapper { padding: 0.5rem 1.75rem; }
-		.q-s  { font-size: clamp(1.0rem,  7.5dvh, var(--qd-s)); }
-		.q-m  { font-size: clamp(0.9rem,  6.5dvh, var(--qd-m)); }
-		.q-l  { font-size: clamp(0.78rem, 5.0dvh, var(--qd-l)); }
-		.q-xl { font-size: clamp(0.68rem, 4.0dvh, 1.2rem);      }
+		/* dvh coefficients are deliberately conservative for q-l and q-xl:
+		   the wider viewport allows more chars per line so the same text
+		   needs fewer lines, but the short viewport height (after header,
+		   attribution, and safe-area padding) leaves only ~260px for the
+		   quote area. These values ensure even worst-case lengths fit. */
+		.q-s  { font-size: clamp(1.0rem,  6.5dvh, var(--qd-s)); }
+		.q-m  { font-size: clamp(0.9rem,  5.5dvh, var(--qd-m)); }
+		.q-l  { font-size: clamp(0.78rem, 4.0dvh, var(--qd-l)); }
+		.q-xl { font-size: clamp(0.68rem, 3.2dvh, 1.0rem);      }
 	}
 </style>
